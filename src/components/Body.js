@@ -2,15 +2,12 @@ import RestroCard from "./RestroCard";
 import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 const Body = () => {
   const [listOfRestaurant, setListOfRestaurant] = useState([]);
-
   const [filteredRestaurant, setFilteredRestaurant] = useState([]);
-
   const [searchText, setSearchText] = useState("");
-
-  console.log("Body Rendered");
 
   useEffect(() => {
     fetchData();
@@ -18,13 +15,10 @@ const Body = () => {
 
   const fetchData = async () => {
     const data = await fetch(
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.6139298&lng=77.2088282&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=25.5541358&lng=84.6664797&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
     );
-
     const json = await data.json();
 
-    console.log(json);
-    
     setListOfRestaurant(
       json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
@@ -33,36 +27,46 @@ const Body = () => {
     );
   };
 
+  const onlineStatus = useOnlineStatus();
+  if (!onlineStatus) {
+    return (
+      <h1 className="text-center text-red-500 text-xl font-semibold mt-10">
+        Looks like you're offline! Please check your internet connection.
+      </h1>
+    );
+  }
+
   return listOfRestaurant.length === 0 ? (
     <Shimmer />
   ) : (
-    <div className="body">
-      <div className="filter">
-        <div className="search">
+    <div className="container mx-auto px-4 py-6">
+      {/* Search & Filter Section */}
+      <div className="flex flex-col sm:flex-row items-center justify-between mb-6 gap-4">
+        {/* Search Bar */}
+        <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden shadow-md">
           <input
             type="text"
-            className="searchbox"
-            placeholder="Search for restaurants....."
+            className="px-4 py-2 outline-none w-72 sm:w-96"
+            placeholder="Search for restaurants..."
             value={searchText}
-            onChange={(e) => {
-              setSearchText(e.target.value);
-            }}
+            onChange={(e) => setSearchText(e.target.value)}
           />
           <button
+            className="px-4 py-2 bg-blue-500 text-white font-semibold hover:bg-blue-600 transition"
             onClick={() => {
-              console.log(searchText);
-              const filteredRestaurant = listOfRestaurant.filter((res) =>
+              const filteredList = listOfRestaurant.filter((res) =>
                 res.info.name.toLowerCase().includes(searchText.toLowerCase())
               );
-
-              setFilteredRestaurant(filteredRestaurant);
+              setFilteredRestaurant(filteredList);
             }}
           >
             Search
           </button>
         </div>
+
+        {/* Top Rated Button */}
         <button
-          className="filter-btn"
+          className="px-6 py-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 transition"
           onClick={() => {
             const filteredList = listOfRestaurant.filter(
               (res) => res.info.avgRating > 4
@@ -71,19 +75,14 @@ const Body = () => {
             setFilteredRestaurant(filteredList);
           }}
         >
-          Top Rated Restaurants
+          Top Rated Restaurants ⭐
         </button>
       </div>
-      <div className="res-container">
+
+      {/* Restaurant Cards */}
+      <div className="flex flex-wrap">
         {filteredRestaurant.map((restaurant) => (
-          <Link
-          style={{
-            textDecoration: 'none',
-            color: '#000',
-          }}
-          key={restaurant.info.id}
-          to={"/restaurants/" + restaurant.info.id}
-          >
+          <Link key={restaurant?.info.id} to={"/restaurants/" + restaurant?.info.id}>
             <RestroCard resData={restaurant} />
           </Link>
         ))}

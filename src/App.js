@@ -8,6 +8,8 @@ import AboutUs from "./components/AboutUs";
 import ContactUs from "./components/ContactUs";
 import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaurantMenu";
+import Grocery from "./components/Grocery";
+
 
 
 const AppLayout = () => {
@@ -27,6 +29,7 @@ const Root = () => (
         <Route index element={<Body />} />
         <Route path="about" element={<AboutUs />} />
         <Route path="contact" element={<ContactUs />} />
+        <Route path="grocery" element={<Grocery />} />
         <Route path="restaurants/:resId" element={<RestaurantMenu />} />
         <Route path="*" element={<Error />} /> 
       </Route>

@@ -1,6 +1,5 @@
 import React from "react";
 
-
 class UserClass extends React.Component {
   constructor(props) {
     super(props);
@@ -8,10 +7,8 @@ class UserClass extends React.Component {
     this.state = {
       userInfo: {
         name: "Loading...",
-        location: "Loading...",
-        avatar_url: "https://via.placeholder.com/120",
-        bio: "Fetching data...",
-        twitter_username: "@loading",
+        location: "Fetching location...",
+        avatar_url: "",
       },
     };
   }
@@ -30,16 +27,20 @@ class UserClass extends React.Component {
   }
 
   render() {
-    const { name, location, avatar_url, bio, twitter_username } =
-      this.state.userInfo;
+    const { name, location, avatar_url } = this.state.userInfo;
 
     return (
-      <div className="user-card">
-        <img src={avatar_url} alt="User Avatar" />
-        <h1>{name}</h1>
-        <h2>{location}</h2>
-        <h2>{bio}</h2>
-        <h2>{twitter_username ? `@${twitter_username}` : "No Twitter"}</h2>
+      <div className="flex justify-center items-center min-h-screen bg-gray-100">
+        <div className="bg-white shadow-lg rounded-lg p-6 w-96 text-center">
+          <img
+            className="w-32 h-32 rounded-full mx-auto border-4 border-gray-300"
+            src={avatar_url || "https://via.placeholder.com/150"}
+            alt="User Avatar"
+          />
+          <h2 className="text-2xl font-bold text-gray-800 mt-4">{name}</h2>
+          <h3 className="text-gray-600 text-lg">{location}</h3>
+          <h4 className="text-gray-500 mt-2">Contact: @hackerachal98</h4>
+        </div>
       </div>
     );
   }
