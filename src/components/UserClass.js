@@ -8,7 +8,7 @@ class UserClass extends React.Component {
     this.state = {
       userInfo: {
         name: "Loading...",
-        location: "Fetching location...",
+        location: "Arrah",
         avatar_url: "",
         bio: "",
         followers: 0,
@@ -19,16 +19,13 @@ class UserClass extends React.Component {
   }
 
   async componentDidMount() {
-    try {
+   
       const response = await fetch("https://api.github.com/users/achalkumar98");
       const data = await response.json();
 
       this.setState({
         userInfo: data,
       });
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-    }
   }
 
   render() {
@@ -40,7 +37,7 @@ class UserClass extends React.Component {
         {/* User Avatar */}
         <img
           className="w-40 h-40 rounded-full mx-auto border-4 border-gray-300 shadow-md"
-          src={avatar_url || "https://via.placeholder.com/150"}
+          src={avatar_url}
           alt="User Avatar"
         />
 
@@ -49,7 +46,7 @@ class UserClass extends React.Component {
         <p className="text-gray-600 text-lg flex items-center justify-center gap-2">
           <FaMapMarkerAlt /> {location}
         </p>
-        <p className="text-gray-500 mt-2">{bio || "No bio available"}</p>
+        <p className="text-gray-500 mt-2">{bio}</p>
 
         {/* User Stats */}
         <div className="flex justify-center gap-6 mt-4">

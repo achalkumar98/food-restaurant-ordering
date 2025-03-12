@@ -12,25 +12,25 @@ import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import { useState } from "react";
 
-// Define AppLayout
+
 const AppLayout = () => {
   const [searchText, setSearchText] = useState("");
 
   return (
     <div className="app">
       <Header searchText={searchText} setSearchText={setSearchText} />
-      <Outlet context={{ searchText }} /> {/* Ensures nested routes work */}
+      <Outlet context={{ searchText }} /> 
     </div>
   );
 };
 
-// Create Router Configuration
+
 const appRouter = createBrowserRouter([
   {
     path: "/",
     element: <AppLayout />,
     children: [
-      { index: true, element: <Body />, errorElement: <Error /> }, // Default Route
+      { index: true, element: <Body />, errorElement: <Error /> }, 
       { path: "about", element: <AboutUs />, errorElement: <Error /> },
       { path: "contact", element: <ContactUs />, errorElement: <Error /> },
       { path: "grocery", element: <Grocery />, errorElement: <Error /> },
@@ -41,6 +41,6 @@ const appRouter = createBrowserRouter([
   },
 ]);
 
-// Render App
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<RouterProvider router={appRouter} />);
