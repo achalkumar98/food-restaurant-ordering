@@ -9,14 +9,17 @@ import ContactUs from "./components/ContactUs";
 import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaurantMenu";
 import Grocery from "./components/Grocery";
-
-
+import Login from "./components/Login";
+import SignUp from "./components/SignUp";
+import { useState } from "react";
 
 const AppLayout = () => {
-  return (
+  const [searchText, setSearchText] = useState("");
+
+return (
     <div className="app">
-      <Header />
-      <Outlet />
+      <Header searchText={searchText} setSearchText={setSearchText} />
+      <Outlet context={{ searchText }} />
     </div>
   );
 };
@@ -31,6 +34,8 @@ const Root = () => (
         <Route path="contact" element={<ContactUs />} />
         <Route path="grocery" element={<Grocery />} />
         <Route path="restaurants/:resId" element={<RestaurantMenu />} />
+        <Route path="login" element={<Login />} />
+        <Route path="signup" element={<SignUp />} />
         <Route path="*" element={<Error />} /> 
       </Route>
     </Routes>
@@ -39,6 +44,4 @@ const Root = () => (
 
 // Render the app
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
-  <Root />
-);
+root.render(<Root />);

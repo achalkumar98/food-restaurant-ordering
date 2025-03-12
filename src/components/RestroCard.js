@@ -56,15 +56,15 @@ const RestroCard = (props) => {
 };
 
 // Higher Order Component for Promoted Label
-export const withPromtedLabel = (RestaurantCard) => {
-  return (props) => (
-    <div className="relative">
-      <label className="absolute bg-black text-white m-2 p-1 px-2 rounded-lg text-xs">
-        Promoted
-      </label>
-      <RestaurantCard {...props} />
-    </div>
-  );
-};
+// export const withPromtedLabel = (RestaurantCard) => {
+//   return (props) => (
+//     <div className="relative">
+//       <label className="absolute bg-black text-white m-2 p-1 px-2 rounded-lg text-xs">
+//         Promoted
+//       </label>
+//       <RestaurantCard {...props} />
+//     </div>
+//   );
+// };
 
 export default RestroCard;
