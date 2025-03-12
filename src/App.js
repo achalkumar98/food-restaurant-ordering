@@ -1,7 +1,6 @@
-
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route, Outlet } from "react-router"; 
+import { createBrowserRouter, RouterProvider, Outlet }  from "react-router";
 import Header from "./components/Header";
 import Body from "./components/Body";
 import AboutUs from "./components/AboutUs";
@@ -13,35 +12,35 @@ import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import { useState } from "react";
 
+// Define AppLayout
 const AppLayout = () => {
   const [searchText, setSearchText] = useState("");
 
-return (
+  return (
     <div className="app">
       <Header searchText={searchText} setSearchText={setSearchText} />
-      <Outlet context={{ searchText }} />
+      <Outlet context={{ searchText }} /> {/* Ensures nested routes work */}
     </div>
   );
 };
 
+// Create Router Configuration
+const appRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <AppLayout />,
+    children: [
+      { index: true, element: <Body />, errorElement: <Error /> }, // Default Route
+      { path: "about", element: <AboutUs />, errorElement: <Error /> },
+      { path: "contact", element: <ContactUs />, errorElement: <Error /> },
+      { path: "grocery", element: <Grocery />, errorElement: <Error /> },
+      { path: "restaurants/:resId", element: <RestaurantMenu />, errorElement: <Error /> },
+      { path: "login", element: <Login />, errorElement: <Error /> },
+      { path: "signup", element: <SignUp />, errorElement: <Error /> },
+    ],
+  },
+]);
 
-const Root = () => (
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<AppLayout />}>
-        <Route index element={<Body />} />
-        <Route path="about" element={<AboutUs />} />
-        <Route path="contact" element={<ContactUs />} />
-        <Route path="grocery" element={<Grocery />} />
-        <Route path="restaurants/:resId" element={<RestaurantMenu />} />
-        <Route path="login" element={<Login />} />
-        <Route path="signup" element={<SignUp />} />
-        <Route path="*" element={<Error />} /> 
-      </Route>
-    </Routes>
-  </BrowserRouter>
-);
-
-// Render the app
+// Render App
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<Root />);
+root.render(<RouterProvider router={appRouter} />);
