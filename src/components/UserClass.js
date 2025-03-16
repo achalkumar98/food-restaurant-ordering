@@ -7,13 +7,13 @@ class UserClass extends React.Component {
 
     this.state = {
       userInfo: {
-        name: "Loading...",
-        location: "Arrah",
-        avatar_url: "",
-        bio: "",
-        followers: 0,
-        public_repos: 0,
-        html_url: "#",
+      name: "",
+      location: "",
+      avatar_url: "",
+      bio: "",
+      followers: 0,
+      public_repos: 0,
+      html_url: "",
       },
     };
   }
@@ -35,11 +35,13 @@ class UserClass extends React.Component {
     return (
       <div className="text-center">
         {/* User Avatar */}
-        <img
-          className="w-40 h-40 rounded-full mx-auto border-4 border-gray-300 shadow-md"
-          src={avatar_url}
-          alt="User Avatar"
-        />
+        {avatar_url && (
+          <img
+            className="w-40 h-40 rounded-full mx-auto border-4 border-gray-300 shadow-md"
+            src={avatar_url}
+            alt="User Avatar"
+          />
+        )}
 
         {/* User Details */}
         <h2 className="text-3xl font-bold text-gray-800 mt-4">{name}</h2>

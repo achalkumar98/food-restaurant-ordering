@@ -1,71 +1,45 @@
 import { LOGO_URL } from "../utils/constants";
 import { Link } from "react-router";
 import useOnlineStatus from "../utils/useOnlineStatus";
-import { FaSearch } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import { useState } from "react";
 
-const Header = ({ searchText, setSearchText }) => {
+
+const Header = () => {
   const onlineStatus = useOnlineStatus();
+
+  const [btnNameReact, setBtnNameReact] = useState("Login");
+
+// Suscribing to the state using Selector
+  const cartItems = useSelector((state) => state.cart.items);
 
   return (
     <header className="flex justify-between items-center px-6 py-4 bg-white shadow-md border-b border-gray-300">
-      {/* Logo */}
       <div>
         <img className="w-32 sm:w-40" src={LOGO_URL} alt="Logo" />
       </div>
-
-      {/* Navigation Links */}
       <nav>
         <ul className="flex items-center gap-x-6 text-gray-700 font-medium">
           <li>Online: {onlineStatus ? "✅" : "🔴"}</li>
-          <li>
-            <Link to="/" className="hover:text-blue-500 transition">
-              Home
-            </Link>
+          <li><Link to="/" className="hover:text-green-500 transition">Home</Link></li>
+          <li><Link to="/about" className="hover:text-green-500 transition">About</Link></li>
+          <li><Link to="/contact" className="hover:text-green-500 transition">Contact</Link></li>
+          <li><Link to="/grocery" className="hover:text-green-500 transition">Grocery</Link></li>
+          <li className="relative">
+            <Link to="/cart" className="hover:text-green-500 transition">Cart 🛒</Link>
+            <div className="bg-green-600 text-white w-5 h-5 rounded-full flex items-center justify-center absolute -top-2 -right-2">
+              <p className="text-sm">{cartItems.length}</p>
+            </div>
           </li>
-          <li>
-            <Link to="/about" className="hover:text-blue-500 transition">
-              About
-            </Link>
-          </li>
-          <li>
-            <Link to="/contact" className="hover:text-blue-500 transition">
-              Contact
-            </Link>
-          </li>
-          <li>
-            <Link to="/grocery" className="hover:text-blue-500 transition">
-              Grocery
-            </Link>
-          </li>
-          <li>
-            <Link to="/cart" className="hover:text-blue-500 transition">
-              Cart 🛒
-            </Link>
-          </li>
-          <li>
-            <Link to="/login" className="hover:text-blue-500 transition">
-              Login
-            </Link>
-          </li>
-          <li>
-            <Link to="/signup" className="hover:text-blue-500 transition">
-              Sign Up
-            </Link>
+          <li className="hover:text-green-500 transition" onClick={() => {
+              btnNameReact === "Login"
+                ? setBtnNameReact("Logout")
+                : setBtnNameReact("Login");
+            }}>
+            {btnNameReact}
           </li>
         </ul>
       </nav>
-
-      {/* Search Bar */}
-      <div className="relative">
-        <input
-          type="text"
-          className="px-4 py-2 pr-10 border border-gray-300 rounded-lg shadow-md outline-none w-56 sm:w-72 focus:ring-2 focus:ring-green-400"
-          placeholder="Search restaurants..."
-          value={searchText}
-          onChange={(e) => setSearchText(e.target.value)}
-        />
-        <FaSearch className="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-500 cursor-pointer" />
-      </div>
     </header>
   );
 };

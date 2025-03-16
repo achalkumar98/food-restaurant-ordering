@@ -1,6 +1,15 @@
 import { CDN_URL } from "../utils/constants";
+import { useDispatch } from "react-redux";
+import { addItem } from "../utils/cartSlice";
 
 const ItemList = ({ items }) => {
+
+  const dispatch = useDispatch();
+
+  const handelAddItem = (item) => {
+    dispatch(addItem(item));
+  };
+
   return (
     <div className="w-full max-h-80 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
       {items.map((item) => {
@@ -32,7 +41,9 @@ const ItemList = ({ items }) => {
                   className="w-28 h-28 object-cover rounded-lg shadow-sm"
                 />
               )}
-              <button className="mt-2 px-4 py-1 text-green-600 border border-green-600 rounded-lg text-sm font-semibold hover:bg-green-600 hover:text-white transition-all">
+              <button className="mt-2 px-4 py-1 text-green-600 border border-green-600 rounded-lg text-sm font-semibold hover:bg-green-600 hover:text-white transition-all"
+              onClick={() => handelAddItem(item)}
+              >
                 ADD +
               </button>
             </div>
