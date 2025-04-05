@@ -7,30 +7,36 @@ class UserClass extends React.Component {
 
     this.state = {
       userInfo: {
-      name: "",
-      location: "",
-      avatar_url: "",
-      bio: "",
-      followers: 0,
-      public_repos: 0,
-      html_url: "",
+        name: "",
+        location: "",
+        avatar_url: "",
+        bio: "",
+        followers: 0,
+        public_repos: 0,
+        html_url: "",
       },
     };
   }
 
   async componentDidMount() {
-   
-      const response = await fetch("https://api.github.com/users/achalkumar98");
-      const data = await response.json();
+    const response = await fetch("https://api.github.com/users/achalkumar98");
+    const data = await response.json();
 
-      this.setState({
-        userInfo: data,
-      });
+    this.setState({
+      userInfo: data,
+    });
   }
 
   render() {
-    const { name, location, avatar_url, bio, followers, public_repos, html_url } =
-      this.state.userInfo;
+    const {
+      name,
+      location,
+      avatar_url,
+      bio,
+      followers,
+      public_repos,
+      html_url,
+    } = this.state.userInfo;
 
     return (
       <div className="text-center">

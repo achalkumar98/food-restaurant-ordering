@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import { addItem } from "../utils/cartSlice";
 
 const ItemList = ({ items }) => {
-
   const dispatch = useDispatch();
 
   const handelAddItem = (item) => {
@@ -41,8 +40,9 @@ const ItemList = ({ items }) => {
                   className="w-28 h-28 object-cover rounded-lg shadow-sm"
                 />
               )}
-              <button className="mt-2 px-4 py-1 text-green-600 border border-green-600 rounded-lg text-sm font-semibold hover:bg-green-600 hover:text-white transition-all"
-              onClick={() => handelAddItem(item)}
+              <button
+                className="mt-2 px-4 py-1 text-green-600 border border-green-600 rounded-lg text-sm font-semibold hover:bg-green-600 hover:text-white transition-all"
+                onClick={() => handelAddItem(item)}
               >
                 ADD +
               </button>

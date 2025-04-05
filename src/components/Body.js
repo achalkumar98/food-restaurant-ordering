@@ -15,20 +15,26 @@ const Body = () => {
 
   const fetchData = async () => {
     const data = await fetch(
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=21.1938475&lng=81.3509416&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=21.2231255&lng=81.34544170000001&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
     );
     const json = await data.json();
     setListOfRestraunt(
-      json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants || []
+      json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
+        ?.restaurants || []
     );
     setFilteredRestaurant(
-      json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants || []
+      json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
+        ?.restaurants || []
     );
   };
 
   const onlineStatus = useOnlineStatus();
   if (!onlineStatus) {
-    return <h1 className="text-center text-red-500 text-xl">Looks like you're offline! Please check your internet connection.</h1>;
+    return (
+      <h1 className="text-center text-red-500 text-xl">
+        Looks like you're offline! Please check your internet connection.
+      </h1>
+    );
   }
 
   return listOfRestaurant.length === 0 ? (
@@ -72,7 +78,11 @@ const Body = () => {
 
       <div className="flex flex-wrap gap-4">
         {filteredRestaurant.map((restaurant) => (
-          <Link key={restaurant?.info.id} to={`/restaurants/${restaurant?.info.id}`} className="block">
+          <Link
+            key={restaurant?.info.id}
+            to={`/restaurants/${restaurant?.info.id}`}
+            className="block"
+          >
             <RestroCard resData={restaurant} />
           </Link>
         ))}

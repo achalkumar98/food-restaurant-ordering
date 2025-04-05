@@ -28,7 +28,8 @@ const Contact = () => {
           Contact Us
         </h1>
         <p className="text-gray-600 text-center mb-8">
-          We'd love to hear from you! Fill out the form below and we'll get back to you.
+          We'd love to hear from you! Fill out the form below and we'll get back
+          to you.
         </p>
 
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>

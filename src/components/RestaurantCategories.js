@@ -5,7 +5,7 @@ import ItemList from "./ItemList";
 
 const RestaurantCategories = ({ data, showItems, setShowIndex, index }) => {
   const handleClick = () => {
-    setShowIndex(prevIndex => (prevIndex === index ? null : index));
+    setShowIndex((prevIndex) => (prevIndex === index ? null : index));
   };
 
   return (

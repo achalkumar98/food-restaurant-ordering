@@ -33,28 +33,20 @@ const RestaurantMenu = () => {
 
   return (
     <div className="max-w-3xl mx-auto p-6">
-      {/* Restaurant Details */}
       <div className="py-6 border-b">
         <h1 className="text-3xl font-bold text-gray-800">{name}</h1>
       </div>
-
-      {/* Info Box */}
       <div className="bg-gray-50 shadow-md rounded-lg p-6 mt-4">
         <div className="flex flex-col md:flex-row justify-between items-center">
-          {/* Ratings */}
           <div className="flex items-center gap-2 text-lg font-semibold">
             <AiOutlineStar className="text-green-600" /> {avgRating} (
             {totalRatingsString})
           </div>
-          {/* Cost */}
           <span className="text-lg font-semibold">{costForTwoMessage}</span>
-          {/* SLA */}
           <div className="flex items-center text-lg font-semibold">
             <FiClock className="mr-1" /> {slaString}
           </div>
         </div>
-
-        {/* Cuisines - Aligned Below */}
         <div className="mt-2 text-center md:text-left font-semibold text-red-500">
           {cuisines.join(", ")}
         </div>

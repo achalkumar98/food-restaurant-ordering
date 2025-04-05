@@ -14,13 +14,12 @@ import Cart from "./components/Cart";
 const Grocery = lazy(() => import("./components/Grocery"));
 
 const AppLayout = () => {
-
   return (
     <Provider store={appStore}>
-    <div className="app">
-      <Header /> 
-      <Outlet />
-    </div>
+      <div className="app">
+        <Header />
+        <Outlet />
+      </div>
     </Provider>
   );
 };
@@ -33,9 +32,16 @@ const appRouter = createBrowserRouter([
       { index: true, element: <Body /> }, // Body at root, no prop here
       { path: "about", element: <AboutUs /> },
       { path: "contact", element: <ContactUs /> },
-      { path: "grocery", element: <Suspense fallback={<div>Loading...</div>}><Grocery /></Suspense> },
+      {
+        path: "grocery",
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <Grocery />
+          </Suspense>
+        ),
+      },
       { path: "restaurants/:resId", element: <RestaurantMenu /> },
-      { path: "cart", element: <Cart/> },
+      { path: "cart", element: <Cart /> },
     ],
     errorElement: <Error />,
   },
