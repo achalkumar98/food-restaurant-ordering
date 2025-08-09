@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { MdKeyboardArrowUp } from "react-icons/md";
 import ItemList from "./ItemList";

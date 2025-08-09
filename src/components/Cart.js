@@ -20,7 +20,7 @@ const Cart = () => {
       </div>
       <button
         onClick={handleClearCart}
-        className="mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-red-700"
+        className="mt-4 px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600"
       >
         Clear Cart
       </button>

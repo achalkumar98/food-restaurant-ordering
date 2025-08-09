@@ -1,91 +1,123 @@
+import { useEffect, useState } from "react";
 import RestroCard from "./RestroCard";
-import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router";
 import useOnlineStatus from "../utils/useOnlineStatus";
 
 const Body = () => {
-  const [listOfRestaurant, setListOfRestraunt] = useState([]);
-  const [filteredRestaurant, setFilteredRestaurant] = useState([]);
-  const [searchText, setSearchText] = useState("");
+  const [whatsOnYourMind, setWhatsOnYourMind] = useState([]);
+  const [restaurants, setRestaurants] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const onlineStatus = useOnlineStatus();
 
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async () => {
-    const data = await fetch(
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=21.2231255&lng=81.34544170000001&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-    );
-    const json = await data.json();
-    setListOfRestraunt(
-      json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
-        ?.restaurants || []
-    );
-    setFilteredRestaurant(
-      json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
-        ?.restaurants || []
-    );
+    try {
+      const res = await fetch(
+        "https://www.swiggy.com/dapi/restaurants/list/v5?lat=21.1652557&lng=81.3955404&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+      );
+      const json = await res.json();
+
+      const mindData =
+        json?.data?.cards[0]?.card?.card?.gridElements?.infoWithStyle?.info ||
+        [];
+
+      const restData =
+        json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
+          ?.restaurants || [];
+
+      setWhatsOnYourMind(mindData);
+      setRestaurants(restData);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching Swiggy data:", error);
+    }
   };
 
-  const onlineStatus = useOnlineStatus();
   if (!onlineStatus) {
     return (
-      <h1 className="text-center text-red-500 text-xl">
-        Looks like you're offline! Please check your internet connection.
+      <h1 className="text-center mt-20 text-2xl font-bold">
+        Looks like you're offline. Please check your internet connection.
       </h1>
     );
   }
 
-  return listOfRestaurant.length === 0 ? (
-    <Shimmer />
-  ) : (
-    <div className="p-6">
-      <div className="flex flex-col md:flex-row justify-between items-center mb-6">
-        <div className="flex gap-4 items-center">
-          <input
-            type="text"
-            data-testid="searchInput"
-            className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-            value={searchText}
-            placeholder="Search restaurants..."
-            onChange={(e) => setSearchText(e.target.value)}
-          />
-          <button
-            className="px-6 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600 transition"
-            onClick={() => {
-              const filtered = listOfRestaurant.filter((res) =>
-                res.info.name.toLowerCase().includes(searchText.toLowerCase())
-              );
-              setFilteredRestaurant(filtered);
-            }}
-          >
-            Search
-          </button>
+  if (loading) {
+    return <Shimmer />;
+  }
+
+  return (
+    <div className="max-w-6xl mx-auto px-4">
+      {/* What's on your mind */}
+      <div className="mb-8">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-2xl font-bold py-6">What's on your mind?</h2>
+
+          {/* Arrows on the right */}
+          <div className="flex space-x-2">
+            <button
+              onClick={() => {
+                document
+                  .getElementById("mind-scroll")
+                  .scrollBy({ left: -200, behavior: "smooth" });
+              }}
+              className="text-lg font-bold bg-slate-100 p-2 hover:bg-slate-200"
+            >
+              ←
+            </button>
+            <button
+              onClick={() => {
+                document
+                  .getElementById("mind-scroll")
+                  .scrollBy({ left: 200, behavior: "smooth" });
+              }}
+              className="text-lg font-bold bg-slate-100 p-2 hover:bg-slate-200"
+            >
+              →
+            </button>
+          </div>
         </div>
-        <button
-          className="px-6 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600 transition"
-          onClick={() => {
-            const filteredList = listOfRestaurant.filter(
-              (res) => res.info.avgRating > 4
-            );
-            setFilteredRestaurant(filteredList);
-          }}
-        >
-          Top Rated Restaurants
-        </button>
+
+        <div className="relative">
+          <div
+            id="mind-scroll"
+            className="flex space-x-10 overflow-x-auto hide-scrollbar scroll-smooth"
+          >
+            {whatsOnYourMind.map((item, index) => (
+              <div
+                key={index}
+                className="flex flex-col items-center flex-shrink-0"
+              >
+                <img
+                  src={`https://media-assets.swiggy.com/${item.imageId}`}
+                  alt={item.accessibility?.altText || "item"}
+                  className="w-32 h-fit object-cover rounded-full hover:scale-105 transition-transform duration-200"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
-      <div className="flex flex-wrap gap-4">
-        {filteredRestaurant.map((restaurant) => (
-          <Link
-            key={restaurant?.info.id}
-            to={`/restaurants/${restaurant?.info.id}`}
-            className="block"
-          >
-            <RestroCard resData={restaurant} />
-          </Link>
-        ))}
+      {/* Top restaurants */}
+      <div>
+        <h2 className="text-2xl font-bold mb-4">
+          Restaurants with online food delivery in Bhilai
+        </h2>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+          {restaurants.map((restaurant) => (
+            <Link
+              key={restaurant.info.id}
+              to={`/restaurants/${restaurant.info.id}`} // plural "restaurants"
+            >
+              <RestroCard resData={restaurant} />
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );

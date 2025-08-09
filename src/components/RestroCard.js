@@ -1,42 +1,63 @@
 import { CDN_URL } from "../utils/constants";
-import { FiClock } from "react-icons/fi";
-import { AiOutlineStar } from "react-icons/ai";
+import { AiFillStar } from "react-icons/ai";
 
-const RestroCard = (props) => {
-  const { resData } = props;
-
-  const { cloudinaryImageId, name, cuisines, avgRating, costForTwo } =
-    resData?.info;
-
-  const deliveryTime = resData?.info?.sla?.deliveryTime;
+const RestroCard = ({ resData }) => {
+  const {
+    cloudinaryImageId,
+    name,
+    cuisines,
+    avgRating,
+    sla,
+    areaName,
+    aggregatedDiscountInfoV3,
+  } = resData?.info || {};
 
   return (
     <div
       data-testid="resCard"
-      className="p-4 w-[250px] rounded-lg bg-gray-100 hover:bg-gray-200 shadow-md"
+      className="w-[260px] cursor-pointer hover:scale-95 transition-transform duration-300"
     >
-      <img
-        className="rounded-lg w-full h-40 object-cover"
-        alt="res-logo"
-        src={CDN_URL + cloudinaryImageId}
-      />
-      <h3 className="font-bold py-2 text-lg truncate">{name}</h3>
+      {/* Image Container */}
+      <div className="relative">
+        <img
+          className="w-full h-44 object-cover rounded-2xl"
+          alt={name}
+          src={CDN_URL + cloudinaryImageId}
+        />
 
-      <h4 className="text-gray-600 text-sm">
-        {cuisines.length > 0 ? cuisines.join(", ") : "No cuisines available"}
-      </h4>
+        {/* Offer Overlay */}
+        {aggregatedDiscountInfoV3?.header && (
+          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent rounded-b-2xl px-3 py-2">
+            <p className="text-white font-bold text-lg uppercase">
+              {aggregatedDiscountInfoV3.header}{" "}
+              {aggregatedDiscountInfoV3.subHeader &&
+                ` ${aggregatedDiscountInfoV3.subHeader}`}
+            </p>
+          </div>
+        )}
+      </div>
 
-      <h4 className="flex items-center text-yellow-500 font-medium">
-        <AiOutlineStar className="mr-1" />
-        {avgRating}
-      </h4>
+      {/* Info Section */}
+      <div className="mt-3">
+        {/* Name */}
+        <h3 className="font-bold text-lg text-gray-900 truncate">{name}</h3>
 
-      <h4 className="text-gray-700">💰 {costForTwo}</h4>
+        {/* Rating & Delivery */}
+        <div className="flex items-center text-sm text-gray-700 font-medium mt-1">
+          <AiFillStar className="text-green-600 mr-1" />
+          <span>{avgRating || "N/A"}</span>
+          <span className="mx-2">•</span>
+          <span>{sla?.slaString || `${sla?.deliveryTime} mins`}</span>
+        </div>
 
-      <h4 className="flex items-center text-gray-500">
-        <FiClock className="mr-1" />
-        {deliveryTime} min
-      </h4>
+        {/* Cuisines */}
+        <p className="text-gray-500 text-sm truncate">
+          {cuisines?.join(", ")}
+        </p>
+
+        {/* Area Name */}
+        <p className="text-gray-500 text-sm">{areaName}</p>
+      </div>
     </div>
   );
 };

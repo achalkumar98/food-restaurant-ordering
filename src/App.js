@@ -1,6 +1,6 @@
-import React, { lazy, Suspense } from "react";
+import { lazy, Suspense, useState } from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router"; // Fixed import (react-router-dom)
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router";
 import Header from "./components/Header";
 import Body from "./components/Body";
 import AboutUs from "./components/AboutUs";
@@ -10,15 +10,18 @@ import RestaurantMenu from "./components/RestaurantMenu";
 import { Provider } from "react-redux";
 import appStore from "./utils/appStore";
 import Cart from "./components/Cart";
+import Search from "./components/Search";
 
 const Grocery = lazy(() => import("./components/Grocery"));
 
 const AppLayout = () => {
+  const [searchText, setSearchText] = useState("");
+
   return (
     <Provider store={appStore}>
       <div className="app">
-        <Header />
-        <Outlet />
+        <Header searchText={searchText} setSearchText={setSearchText} />
+        <Outlet context={{ searchText }} />
       </div>
     </Provider>
   );
@@ -28,10 +31,12 @@ const appRouter = createBrowserRouter([
   {
     path: "/",
     element: <AppLayout />,
+    errorElement: <Error />,
     children: [
-      { index: true, element: <Body /> }, // Body at root, no prop here
+      { index: true, element: <Body /> },
       { path: "about", element: <AboutUs /> },
       { path: "contact", element: <ContactUs /> },
+      { path: "search", element: <Search /> }, 
       {
         path: "grocery",
         element: (
@@ -43,7 +48,6 @@ const appRouter = createBrowserRouter([
       { path: "restaurants/:resId", element: <RestaurantMenu /> },
       { path: "cart", element: <Cart /> },
     ],
-    errorElement: <Error />,
   },
 ]);
 

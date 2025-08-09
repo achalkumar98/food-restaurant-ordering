@@ -8,63 +8,65 @@ import { useState } from "react";
 
 const RestaurantMenu = () => {
   const { resId } = useParams();
-
   const resInfo = useRestaurantMenu(resId);
-
   const [showIndex, setShowIndex] = useState(null);
 
   if (!resInfo) return <ShimmerMenu />;
 
-  const { name, cuisines, costForTwoMessage, avgRating, totalRatingsString } =
-    resInfo?.cards[2]?.card?.card?.info || {};
+  const {
+    name,
+    cuisines,
+    costForTwoMessage,
+    avgRating,
+    totalRatingsString,
+    sla,
+  } = resInfo?.cards[2]?.card?.card?.info || {};
 
-  const { slaString } = resInfo?.cards[2]?.card?.card?.info?.sla || {};
-
-  const { itemCards } =
-    resInfo?.cards?.[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards?.[2]?.card
-      ?.card || {};
+  const slaString = sla?.slaString || "";
 
   const categories =
     resInfo?.cards?.[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
       (c) =>
         c.card?.card?.["@type"] ===
         "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
-    );
+    ) || [];
 
   return (
-    <div className="max-w-3xl mx-auto p-6">
-      <div className="py-6 border-b">
-        <h1 className="text-3xl font-bold text-gray-800">{name}</h1>
-      </div>
-      <div className="bg-gray-50 shadow-md rounded-lg p-6 mt-4">
-        <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="flex items-center gap-2 text-lg font-semibold">
-            <AiOutlineStar className="text-green-600" /> {avgRating} (
-            {totalRatingsString})
+    <main className="max-w-4xl mx-auto p-6 sm:p-8 md:p-12">
+      {/* Restaurant Info Header */}
+      <header className="mb-8 border-b border-gray-300 pb-6">
+        <h1 className="text-4xl font-extrabold text-gray-900 mb-3 truncate">{name}</h1>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0">
+          <div className="flex items-center gap-4 text-gray-700 font-semibold text-base sm:text-lg">
+            <AiOutlineStar className="text-green-600 text-xl sm:text-2xl" />
+            <span>
+              {avgRating} <span className="text-gray-500">({totalRatingsString})</span>
+            </span>
           </div>
-          <span className="text-lg font-semibold">{costForTwoMessage}</span>
-          <div className="flex items-center text-lg font-semibold">
-            <FiClock className="mr-1" /> {slaString}
+          <div className="text-red-600 font-semibold text-base sm:text-lg">{costForTwoMessage}</div>
+          <div className="flex items-center gap-2 text-gray-700 font-semibold text-base sm:text-lg">
+            <FiClock className="text-xl sm:text-2xl" />
+            <span>{slaString}</span>
           </div>
         </div>
-        <div className="mt-2 text-center md:text-left font-semibold text-red-500">
-          {cuisines.join(", ")}
-        </div>
-      </div>
+        <p className="mt-4 text-center sm:text-left text-red-500 font-semibold text-sm sm:text-base tracking-wide">
+          {cuisines?.join(", ")}
+        </p>
+      </header>
 
-      {/* Restaurant Menu Categories (Accordion) */}
-      <div className="mt-6">
+      {/* Categories Accordion */}
+      <section className="space-y-6">
         {categories.map((category, index) => (
           <RestaurantCategories
             key={category.card.card.title}
             data={category?.card?.card}
-            showItems={index === showIndex}
-            setShowIndex={setShowIndex} // Pass function reference
-            index={index} // Pass current index
+            showItems={showIndex === index}
+            setShowIndex={setShowIndex}
+            index={index}
           />
         ))}
-      </div>
-    </div>
+      </section>
+    </main>
   );
 };
 
