@@ -8,10 +8,12 @@ import { useState } from "react";
 
 const RestaurantMenu = () => {
   const { resId } = useParams();
-  const resInfo = useRestaurantMenu(resId);
+  const { resInfo, loading, error } = useRestaurantMenu(resId);
   const [showIndex, setShowIndex] = useState(null);
 
-  if (!resInfo) return <ShimmerMenu />;
+  if (loading) return <ShimmerMenu />;
+  if (error) return <div className="text-center text-red-600 mt-10">Error: {error}</div>;
+  if (!resInfo) return null; // fallback if no data
 
   const {
     name,

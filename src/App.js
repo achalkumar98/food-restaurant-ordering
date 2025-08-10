@@ -11,6 +11,8 @@ import { Provider } from "react-redux";
 import appStore from "./utils/appStore";
 import Cart from "./components/Cart";
 import Search from "./components/Search";
+import Footer from "./components/Footer";
+
 
 const Grocery = lazy(() => import("./components/Grocery"));
 
@@ -19,13 +21,17 @@ const AppLayout = () => {
 
   return (
     <Provider store={appStore}>
-      <div className="app">
+      <div className="app flex flex-col min-h-screen">
         <Header searchText={searchText} setSearchText={setSearchText} />
-        <Outlet context={{ searchText }} />
+        <main className="flex-grow">
+          <Outlet context={{ searchText }} />
+        </main>
+        <Footer />
       </div>
     </Provider>
   );
 };
+
 
 const appRouter = createBrowserRouter([
   {
