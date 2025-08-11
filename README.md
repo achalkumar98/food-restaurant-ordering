@@ -39,40 +39,41 @@ A modern **React**-based food ordering web app built using **Parcel bundler** an
 
 ## 📂 Project Structure
 
-
+```plaintext
 FOOD-ORDERING/
 ├── src/
-│ ├── components/
-│ │ ├── tests/ # Test files
-│ │ ├── AboutUs.js
-│ │ ├── Body.js
-│ │ ├── Cart.js
-│ │ ├── ContactUs.js
-│ │ ├── Error.js
-│ │ ├── Footer.js
-│ │ ├── Grocery.js
-│ │ ├── Header.js
-│ │ ├── ItemList.js
-│ │ ├── RestaurantCategory.js
-│ │ ├── RestaurantMenu.js
-│ │ ├── RestroCard.js
-│ │ ├── Search.js
-│ │ ├── Shimmer.js
-│ │ ├── ShimmerMenu.js
-│ │ ├── UserClass.js
-│ ├── utils/
-│ │ ├── appStore.js
-│ │ ├── cartSlice.js
-│ │ ├── constants.js
-│ │ ├── useOnlineStatus.js
-│ │ ├── useRestaurant.js
-│ ├── App.js
+│   ├── components/
+│   │   ├── __tests__/               # Test files
+│   │   ├── AboutUs.js
+│   │   ├── Body.js
+│   │   ├── Cart.js
+│   │   ├── ContactUs.js
+│   │   ├── Error.js
+│   │   ├── Footer.js
+│   │   ├── Grocery.js
+│   │   ├── Header.js
+│   │   ├── ItemList.js
+│   │   ├── RestaurantCategory.js
+│   │   ├── RestaurantMenu.js
+│   │   ├── RestroCard.js
+│   │   ├── Search.js
+│   │   ├── Shimmer.js
+│   │   ├── ShimmerMenu.js
+│   │   ├── UserClass.js
+│   ├── utils/
+│   │   ├── appStore.js
+│   │   ├── cartSlice.js
+│   │   ├── constants.js
+│   │   ├── useOnlineStatus.js
+│   │   ├── useRestaurant.js
+│   ├── App.js
 ├── index.html
 ├── index.css
 ├── babel.config.js
 ├── jest.config.js
 ├── package.json
 ├── README.md
+
 
 
 
