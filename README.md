@@ -6,7 +6,7 @@
 ![License](https://img.shields.io/badge/License-MIT-green)
 
 
-[![Watch the demo](https://img.youtube.com/vi/VIDEO_ID/maxresdefault.jpg)](https://drive.google.com/file/d/1NUcLcoGqEAYisjpXruB8_MpgF4l2BJz5/view?usp=sharing)
+[![Watch the demo](assets/demo-thumbnil.png)](https://drive.google.com/file/d/1NUcLcoGqEAYisjpXruB8_MpgF4l2BJz5/view?usp=sharing)
 
 
 
