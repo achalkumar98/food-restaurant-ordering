@@ -5,6 +5,11 @@
 ![Jest](https://img.shields.io/badge/Testing-Jest-red)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
+
+[![Watch the demo](https://img.youtube.com/vi/VIDEO_ID/maxresdefault.jpg)](https://drive.google.com/file/d/1NUcLcoGqEAYisjpXruB8_MpgF4l2BJz5/view?usp=sharing)
+
+
+
 A modern **React**-based food ordering web app built using **Parcel bundler** and the **Swiggy Live API** for real-time restaurant data.
 
 ---
