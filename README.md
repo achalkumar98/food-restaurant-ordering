@@ -1,6 +1,6 @@
 # 🍽️ SpicyFood — Food Ordering Restaurant 🚀
 
-![React](https://img.shields.io/badge/React-18-blue)
+![React](https://img.shields.io/badge/React-blue)
 ![Redux Toolkit](https://img.shields.io/badge/Redux%20Toolkit-RTK-purple)
 ![Jest](https://img.shields.io/badge/Testing-Jest-red)
 ![License](https://img.shields.io/badge/License-MIT-green)
@@ -142,15 +142,19 @@ Steps to Setup Testing
 
 
 
+
 🚀 Getting Started
-   # Install dependencies
-    npm install
+# Clone the repository
+git clone https://github.com/achalkumar98/food-restaurant-ordering.git
 
-   # Start development server
-    npm start
+# Navigate to the project folder
+cd your-repo
 
-  # Run tests
-    npm test
+# Install dependencies
+npm install
+
+# Run the development server
+npm run dev
 
 
 
